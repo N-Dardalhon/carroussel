@@ -1,22 +1,34 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrousel 3D interactif</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>3D Carousel</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="carrousel-container">
-    <div class="carrousel">
-        <div class="slide">Slide 1</div>
-        <div class="slide">Slide 2</div>
-        <div class="slide">Slide 3</div>
-        <div class="slide">Slide 4</div>
-        <div class="slide">Slide 5</div>
+
+<header>
+    <h1>3D CSS Carousel</h1>
+</header>
+
+<main>
+    <div class="carousel-container">
+        <button class="nav prev">&#10094;</button>
+        <div class="carousel">
+            <div class="carousel-track">
+                <div class="carousel-item"><img src="images/logo.jpeg" alt="ui"></div>
+                <div class="carousel-item"><img src="https://placeimg.com/640/360/nature" alt="a"></div>
+                <div class="carousel-item"><img src="https://placeimg.com/640/360/architecture" alt="z"></div>
+                <div class="carousel-item"><img src="https://placeimg.com/640/360/tech" alt="e"></div>
+                <div class="carousel-item"><img src="https://placeimg.com/640/360/people" alt="r"></div>
+            </div>
+        </div>
+        <button class="nav next">&#10095;</button>
     </div>
-</div>
+</main>
 
 <script src="script.js"></script>
+
 </body>
 </html>

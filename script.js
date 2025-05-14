@@ -1,37 +1,52 @@
-// script.js
+const track = document.querySelector('.carousel-track');
+const items = document.querySelectorAll('.carousel-item');
+const prevBtn = document.querySelector('.prev');
+const nextBtn = document.querySelector('.next');
 
 let currentIndex = 0;
-const totalSlides = 5; // Nombre de slides
+const totalItems = items.length;
 
-const carrousel = document.querySelector('.carrousel');
+function updateCarousel() {
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-// Fonction pour déplacer le carrousel
-function moveCarrousel() {
-    const rotationDegree = -currentIndex * 72; // Chaque slide occupe 72 degrés
-    carrousel.style.transform = `rotateY(${rotationDegree}deg)`;
+    items.forEach((item, index) => {
+        const offset = index - currentIndex;
+
+        item.style.transform = `
+      perspective(1000px)
+      rotateY(${offset * 30}deg)
+      scale(${Math.max(1 - Math.abs(offset) * 0.2, 0.8)})
+    `;
+        item.style.opacity = offset === 0 ? '1' : '0.5';
+        item.style.zIndex = 10 - Math.abs(offset);
+    });
 }
 
-// Fonction pour aller à la slide suivante
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides; // Boucle sur les slides
-    moveCarrousel();
-}
+prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    updateCarousel();
+});
 
-// Fonction pour aller à la slide précédente
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Boucle sur les slides
-    moveCarrousel();
-}
+nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalItems;
+    updateCarousel();
+});
 
-// Vous pouvez déclencher ces fonctions avec des boutons ou des événements de swipe
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') {
-        nextSlide();
-    }
-    if (e.key === 'ArrowLeft') {
-        prevSlide();
+// Swipe mobile support
+let startX = 0;
+track.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+});
+track.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+    if (diff > 50) {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateCarousel();
+    } else if (diff < -50) {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateCarousel();
     }
 });
 
-// Initialiser la position
-moveCarrousel();
+updateCarousel();
